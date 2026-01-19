@@ -1,51 +1,171 @@
-# Audio-Emotion-Recognition
-# Speech Emotion Recognition using Wav2Vec2
+#  Audio Emotion Recognition
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
-[![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-Hugging%20Face-yellow)](https://huggingface.co/Dpngtm)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1VNhIjY7gW29d0uKGNDGN0eOp-pxr_pFL)  
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-yellow)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## 📌 Project Overview
-This project focuses on **Speech Emotion Recognition (SER)**, leveraging the power of Self-Supervised Learning (SSL). The goal is to classify raw audio signals into distinct emotional categories (e.g., Happy, Sad, Angry, Neutral) by fine-tuning the **Wav2Vec2** architecture.
+A Audio Emotion Recognition application built with **Gradio** and **Wav2Vec2**.
+This project uses a fine-tuned transformer-based model to detect **7 different human emotions** from live microphone recordings or uploaded audio files.
 
-The model was trained on a composite dataset to ensure robustness across different voice types and recording conditions, achieving a test accuracy of **~79.6%**.
+**Live Demo:** [https://huggingface.co/spaces/DGautam11/Audio-Emotion-Recognition](https://huggingface.co/spaces/Dpngtm/Audio-Emotion-Recognition)
 
-🔗 **Live Demo:** [Try the Gradio App on Hugging Face Spaces](https://huggingface.co/spaces/Dpngtm/Audio-Emotion-Recognition)
+ **Model:** [https://huggingface.co/Dpngtm/wav2vec2-emotion-recognition](https://huggingface.co/Dpngtm/wav2vec2-emotion-recognition)
 
-## 📊 Dataset Composition
-To create a diverse and generalized model, I combined four prominent audio datasets:
-* **RAVDESS** (Ryerson Audio-Visual Database of Emotional Speech and Song)
-* **TESS** (Toronto Emotional Speech Set)
-* **CREMA-D** (Crowd-sourced Emotional Multimodal Actors Dataset)
-* **SAVEE** (Surrey Audio-Visual Expressed Emotion)
+---
 
-*Preprocessing involved audio normalization, resampling to 16kHz, and categorical label alignment.*
+##  Features
 
-## 🛠️ Tech Stack & Methodology
-* **Model Architecture:** `facebook/wav2vec2-base` (Fine-tuned for Classification Head).
-* **Frameworks:** PyTorch, Hugging Face Transformers.
-* **Audio Processing:** Librosa.
-* **Deployment:** Gradio (Web Interface).
+*  **Real-time Inference:** Record voice directly from the browser
+*  **File Upload:** Supports WAV, MP3, and FLAC audio files
+*  **High Accuracy:** ~80% validation accuracy
+*  **Robust Audio Preprocessing:**
 
-### Key Technical Challenge
-Standard speech models are optimized for ASR (transcription). The challenge was to freeze the feature extractor of Wav2Vec2 and retrain the classification head to detect *prosodic features* (tone, pitch, intensity) rather than linguistic content.
+  * Automatic resampling to **16 kHz**
+  * Stereo-to-mono conversion
 
-## 📈 Results
-The model was evaluated on a held-out test set derived from the combined dataset.
 
-| Metric | Score |
-| :--- | :--- |
-| **Accuracy** | **79.57%** |
-| **F1 Score** | **79.43%** |
+---
 
-## 🚀 How to Run
+## Project Structure
 
-### Option 1: Google Colab (Recommended)
-You can run the full training and inference pipeline directly in your browser without local setup:
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1VNhIjY7gW29d0uKGNDGN0eOp-pxr_pFL)
+```text
+Audio-Emotion-Recognition/
+├── app.py                       # Main Gradio UI application
+├── requirements.txt             # Python dependencies
+├── README.md                    # Project documentation
+├── notebooks/                   # Training & experimentation notebooks
+│   ├── 01_data_prepration.ipynb     # Dataset cleaning & merging
+│   └── 02_wav2vec2_finetuning.ipynb # Wav2Vec2 fine-tuning pipeline
+└── src/                         # Core source code
+    ├── __init__.py              # Package marker
+    └── inference.py             # Model loading & prediction logic
+```
 
-### Option 2: Local Installation
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/DGautam11/Audio-Emotion-Recognition.git](https://github.com/DGautam11/Audio-Emotion-Recognition.git)
-   cd Audio-Emotion-Recognition
+---
+
+## Model Performance
+
+The model was fine-tuned for **10 epochs** on a combined emotional speech dataset.
+Below are the **final evaluation metrics** on the validation set:
+
+| Metric          | Score      |
+| --------------- | ---------- |
+| Accuracy        | **79.94%** |
+| F1 Score        | **79.65%** |
+| Validation Loss | **0.6446** |
+
+### Training Metrics per Epoch
+
+| Epoch | Training Loss | Validation Loss | Accuracy | F1 |
+|------:|--------------:|----------------:|---------:|----:|
+| 1 | 1.609200 | 1.595246 | 0.349774 | 0.260018 |
+| 2 | 1.057500 | 1.121261 | 0.625976 | 0.617913 |
+| 3 | 0.832800 | 0.826919 | 0.714344 | 0.705297 |
+| 4 | 0.740900 | 0.736641 | 0.752569 | 0.748802 |
+| 5 | 0.676400 | 0.676429 | 0.772298 | 0.768726 |
+| 6 | 0.537500 | 0.717075 | 0.777641 | 0.773861 |
+| 7 | 0.500000 | 0.674941 | 0.791615 | 0.788884 |
+| 8 | 0.491200 | 0.647880 | 0.795725 | 0.792824 |
+| 9 | 0.450900 | 0.650116 | 0.796958 | 0.793830 |
+| 10 | 0.437200 | 0.644643 | 0.799425 | 0.796541 |
+
+
+
+---
+
+##  Supported Emotions
+
+The model predicts **7 discrete emotion classes**:
+
+* 😠 **Angry**
+* 🤢 **Disgust**
+* 😨 **Fear**
+* 😊 **Happy**
+* 😐 **Neutral**
+* 😢 **Sad**
+* 😲 **Surprise**
+
+---
+
+##  Training Data
+
+The model was fine-tuned using a **merged and balanced dataset** composed of four widely used, high-quality emotional speech corpora:
+
+### Datasets Used
+
+1. **TESS** 
+
+2. **CREMA-D** 
+
+3. **RAVDESS** 
+
+4. **SAVEE** 
+
+### Preprocessing Steps
+
+* Resampled all audio to **16 kHz**
+* Converted stereo audio to **mono**
+* Normalized audio length
+* Unified emotion label mapping across datasets
+* Removed corrupted and low-quality samples
+
+
+---
+
+##  Installation & Usage
+
+### 1 Clone the Repository
+
+```bash
+git clone https://github.com/DGautam11/Audio-Emotion-Recognition.git
+cd Audio-Emotion-Recognition
+```
+
+### 2 Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+**Key dependencies include:**
+
+* `transformers` — model architecture
+* `torch` — PyTorch backend
+* `torchaudio` — audio processing
+* `gradio` — web interface
+* `numpy` — numerical utilities
+
+### 3️⃣ Run the Application
+
+```bash
+python app.py
+```
+
+The Gradio app will launch locally at:
+👉 **[http://127.0.0.1:7860](http://127.0.0.1:7860)**
+
+---
+
+## 🧠 Model Architecture
+
+* Base Model: **Wav2Vec2** (self-supervised speech representation learning)
+* Fine-tuning: Classification head for emotion prediction
+
+
+---
+
+## 🤝 Credits
+
+* **Author:** Deepan Gautam (@DGautam11)
+* **Frameworks & Tools:**
+
+  * Hugging Face Transformers
+  * Gradio
+  * PyTorch
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+Feel free to use, modify, and distribute with attribution.
