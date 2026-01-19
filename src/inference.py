@@ -29,18 +29,16 @@ class Inference:
             return None
 
         try:
-            # CHANGED: Use librosa instead of torchaudio to avoid Codec errors
-            # Load audio at 16kHZ directly
+           
             speech_array, sampling_rate = librosa.load(audio_path, sr=16000)
 
-            # Ensure it's a tensor
             speech_array = torch.tensor(speech_array)
 
             # Handle stereo (if librosa returns 2 channels)
             if len(speech_array.shape) > 1:
                  # Librosa loads as (channels, time) if mono=False, but default is mono=True
                  # If it somehow loaded stereo, average it.
-                 pass 
+                 speech_array = torch.mean(speech_array, dim=0)
 
             inputs = self.processor(
                 speech_array.numpy(), 
@@ -63,6 +61,6 @@ class Inference:
             return dict(sorted(results.items(), key=lambda x: x[1], reverse=True))
 
         except Exception as e:
-            # print the error to logs so you can see it, but don't return it to the UI
+            
             print(f"Prediction Error: {e}")
-            return {"Error": 0.0} # Return 0.0 confidence so it doesn't crash the UI
+            return {"Error": 0.0} 

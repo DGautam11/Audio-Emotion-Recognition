@@ -4,6 +4,8 @@
 ![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+![App Screenshot](screenshot/app.png)
+
 A Audio Emotion Recognition application built with **Gradio** and **Wav2Vec2**.
 This project uses a fine-tuned transformer-based model to detect **7 different human emotions** from live microphone recordings or uploaded audio files.
 
@@ -56,18 +58,7 @@ Below are the **final evaluation metrics** on the validation set:
 
 ### Training Metrics per Epoch
 
-| Epoch | Training Loss | Validation Loss | Accuracy | F1 |
-|------:|--------------:|----------------:|---------:|----:|
-| 1 | 1.609200 | 1.595246 | 0.349774 | 0.260018 |
-| 2 | 1.057500 | 1.121261 | 0.625976 | 0.617913 |
-| 3 | 0.832800 | 0.826919 | 0.714344 | 0.705297 |
-| 4 | 0.740900 | 0.736641 | 0.752569 | 0.748802 |
-| 5 | 0.676400 | 0.676429 | 0.772298 | 0.768726 |
-| 6 | 0.537500 | 0.717075 | 0.777641 | 0.773861 |
-| 7 | 0.500000 | 0.674941 | 0.791615 | 0.788884 |
-| 8 | 0.491200 | 0.647880 | 0.795725 | 0.792824 |
-| 9 | 0.450900 | 0.650116 | 0.796958 | 0.793830 |
-| 10 | 0.437200 | 0.644643 | 0.799425 | 0.796541 |
+![Training Metrics per Epoch](screenshot/training.png)
 
 
 
