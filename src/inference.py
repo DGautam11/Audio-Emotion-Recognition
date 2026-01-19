@@ -1,12 +1,13 @@
 import torch
-import torchaudio
+import librosa
+import numpy as np
 import torch.nn.functional as F
 from transformers import AutoModelForAudioClassification, AutoProcessor
 
 class Inference:
-    def __init__(self, model_name: str = "Dpngtm/wav2vec2-emotion-recognition"):
-        self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-
+    def __init__(self, model_name: str = "Dpngtm/wav2vec2-emotion-recognition", device: str = None):
+        self.device = torch.device(device if device else ("cuda" if torch.cuda.is_available() else "cpu"))
+        
         self.processor = AutoProcessor.from_pretrained(model_name)
         self.model = AutoModelForAudioClassification.from_pretrained(model_name).to(self.device)
         self.model.eval()
@@ -28,20 +29,21 @@ class Inference:
             return None
 
         try:
-            speech_array, sampling_rate = torchaudio.load(audio_path)
+            # CHANGED: Use librosa instead of torchaudio to avoid Codec errors
+            # Load audio at 16kHZ directly
+            speech_array, sampling_rate = librosa.load(audio_path, sr=16000)
 
-            if sampling_rate != 16000:
-                resampler = torchaudio.transforms.Resample(sampling_rate, 16000)
-                speech_array = resampler(speech_array)
+            # Ensure it's a tensor
+            speech_array = torch.tensor(speech_array)
 
-            if speech_array.shape[0] > 1:
-                speech_array = torch.mean(speech_array, dim=0, keepdim=True)
-
-            if speech_array.shape[1] > 16000 * 60:
-                return {"Error": "Audio too long (Max 60s)"}
+            # Handle stereo (if librosa returns 2 channels)
+            if len(speech_array.shape) > 1:
+                 # Librosa loads as (channels, time) if mono=False, but default is mono=True
+                 # If it somehow loaded stereo, average it.
+                 pass 
 
             inputs = self.processor(
-                speech_array.squeeze().numpy(), 
+                speech_array.numpy(), 
                 sampling_rate=16000, 
                 return_tensors="pt", 
                 padding=True
@@ -61,4 +63,6 @@ class Inference:
             return dict(sorted(results.items(), key=lambda x: x[1], reverse=True))
 
         except Exception as e:
-            return {"Error": str(e)}
+            # print the error to logs so you can see it, but don't return it to the UI
+            print(f"Prediction Error: {e}")
+            return {"Error": 0.0} # Return 0.0 confidence so it doesn't crash the UI

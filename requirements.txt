@@ -1,0 +1,9 @@
+transformers>=4.30.0
+torch
+torchaudio
+gradio==4.44.1
+gradio_client==1.3.0
+numpy
+scipy
+pydantic==2.9.2
+librosa
