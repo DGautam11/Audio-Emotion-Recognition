@@ -1,4 +1,4 @@
-#  Audio Emotion Recognition
+#  Speech Emotion Recognition
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-yellow)
@@ -6,7 +6,7 @@
 
 ![App Screenshot](screenshot/app.png)
 
-A Audio Emotion Recognition application built with **Gradio** and **Wav2Vec2**.
+A Speech Emotion Recognition application built with **Gradio** and **Wav2Vec2**.
 This project uses a fine-tuned transformer-based model to detect **7 different human emotions** from live microphone recordings or uploaded audio files.
 
 **Live Demo:** [https://huggingface.co/spaces/DGautam11/Audio-Emotion-Recognition](https://huggingface.co/spaces/Dpngtm/Audio-Emotion-Recognition)
