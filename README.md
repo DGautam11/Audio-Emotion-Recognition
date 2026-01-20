@@ -31,7 +31,7 @@ This project uses a fine-tuned transformer-based model to detect **7 different h
 ## Project Structure
 
 ```text
-Audio-Emotion-Recognition/
+Speech-Emotion-Recognition/
 ├── app.py                       # Main Gradio UI application
 ├── requirements.txt             # Python dependencies
 ├── README.md                    # Project documentation
@@ -108,8 +108,8 @@ The model was fine-tuned using a **merged and balanced dataset** composed of fou
 ### 1 Clone the Repository
 
 ```bash
-git clone https://github.com/DGautam11/Audio-Emotion-Recognition.git
-cd Audio-Emotion-Recognition
+git clone https://github.com/DGautam11/Speech-Emotion-Recognition.git
+cd Speech-Emotion-Recognition
 ```
 
 ### 2 Install Dependencies
@@ -122,7 +122,7 @@ pip install -r requirements.txt
 
 * `transformers` — model architecture
 * `torch` — PyTorch backend
-* `torchaudio` — audio processing
+* `torchaudio , librosa` — audio processing
 * `gradio` — web interface
 * `numpy` — numerical utilities
 
